@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
 
         //依靠DatabaseHelper带全部参数的构造函数创建数据库
-         dbHelper = new DatabaseHelper(MainActivity.this, "uuid_db",null,1);
-         db = dbHelper.getWritableDatabase();
+        dbHelper = new DatabaseHelper(MainActivity.this, "uuid_db",null,1);
+        db = dbHelper.getWritableDatabase();
 
 
         //创建游标对象
@@ -197,8 +197,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     public void run() {
                         Log.d("Jenly","result:" + result);
                         Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
-                    }
-                });
+            }
+        });
 
             }
         });
