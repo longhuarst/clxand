@@ -61,6 +61,13 @@ public class SuMaGuan extends AppCompatActivity {
         this.title = "首次绑定设备";
 
 
+
+
+
+
+
+
+
     }
 
 
