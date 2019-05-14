@@ -4,29 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SuMaGuanV1.SuMaGuanAction">
-
+    tools:context=".SuMaGuanV1.SuMaGuanAction"
+    android:background="@color/grey">
 
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200px"></LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/status"
-            android:text="未连接"/>
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/status"
+                android:text="未连接"/>
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="等待连接..."
-            android:id="@+id/btnOn"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="等待连接..."
+                android:id="@+id/btnOn"/>
+        </LinearLayout>
+
+
+
     </LinearLayout>
+  
 
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img1"/>
 
 
 

@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.clx.cpal.clxand.CustomCaptureActivity;
+import com.clx.cpal.clxand.DatabaseHelper;
 import com.clx.cpal.clxand.MainActivity;
 import com.clx.cpal.clxand.R;
 import com.clx.cpal.clxand.SuMaGuanActivity;
@@ -32,6 +35,10 @@ public class SuMaGuan extends AppCompatActivity {
 
 
     Button btnScan = null;
+    Button btnScanLast = null;
+
+    DatabaseHelper dbHelper;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,88 @@ public class SuMaGuan extends AppCompatActivity {
 
         this.cls = CustomCaptureActivity.class;
         this.title = "首次绑定设备";
+
+
+
+
+        btnScanLast = findViewById(R.id.btnScanLast);
+
+
+        btnScanLast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                GotoApp();//app跳转
+            }
+        });
+
+
+
+
+
+
+
+        //依靠DatabaseHelper带全部参数的构造函数创建数据库
+        dbHelper = new DatabaseHelper(SuMaGuan.this, "uuid_db",null,1);
+        db = dbHelper.getWritableDatabase();
+
+
+        //创建游标对象
+        Cursor cursor = db.query("uuid", new String[]{"uuid"}, null, null, null, null, null);
+
+        //利用游标遍历所有数据对象
+        //为了显示全部，把所有对象连接起来，放到TextView中
+        String uuid = "";
+        if (cursor.moveToNext()){
+            uuid =cursor.getString(cursor.getColumnIndex("uuid"));
+        }
+
+        //        while(cursor.moveToNext()){
+//            String name = cursor.getString(cursor.getColumnIndex("name"));
+//            break;
+//            //textview_data = textview_data + "\n" + name;
+//        }
+
+
+        Log.e("clx","UUID = "+uuid);
+
+
+        if (uuid == ""){
+            //不存在  首次使用
+
+
+            btnScanLast.setVisibility(View.INVISIBLE);//隐藏
+//            this.cls = CustomCaptureActivity.class;
+//            this.title = "首次绑定设备";
+//            checkCameraPermissions();
+
+        }else{
+            btnScanLast.setVisibility(View.VISIBLE);//显示
+
+
+            boolean res = SuMaGuanUuid.getInstance().setUUID(uuid);
+
+
+            if (res){
+                Log.e("clx","插入成功");
+            }
+            Log.e("clx","last uuid = "+uuid.toString());
+
+
+
+
+
+            //显示连接上次设备的按钮
+            //GotoApp();//app跳转
+
+
+
+        }
+
+
 
 
 
@@ -174,6 +263,23 @@ public class SuMaGuan extends AppCompatActivity {
                                     if (res == false){
                                         Toast.makeText(this,"设置设备参数错误",Toast.LENGTH_LONG).show();
                                     }else {
+
+
+
+
+                                        try{
+                                            db.delete("uuid", null , null);  //删除所有记录
+                                        }catch (Exception e){
+
+                                        }
+
+
+
+                                        //创建存放数据的ContentValues对象
+                                        ContentValues values = new ContentValues();
+                                        values.put("uuid",result2[3]);
+                                        //数据库执行插入命令
+                                        db.insert("uuid", null, values);
 
                                         GotoApp();//app跳转
                                     }

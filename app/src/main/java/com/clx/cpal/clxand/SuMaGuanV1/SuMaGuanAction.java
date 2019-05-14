@@ -62,12 +62,12 @@ public class SuMaGuanAction extends AppCompatActivity {
                     btnOn.setText("打开");
                     break;
                 case 0x300:
-                    tvStatus.setText("正在打开...");
-                    btnOn.setText("忙碌中...");
+                    tvStatus.setText("执行中...");
+                    btnOn.setText("正在打开...");
                     break;
                 case 0x400:
-                    tvStatus.setText("正在关闭...");
-                    btnOn.setText("忙碌中...");
+                    tvStatus.setText("执行中...");
+                    btnOn.setText("正在关闭...");
                     break;
             }
 
